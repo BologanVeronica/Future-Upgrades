@@ -4,35 +4,30 @@
 //#define ButtonPin 2 //pui rezistenta (1 capat la gnd, altul la buton)
 #define Colorflasher 4
 
-void InitColorflasher()
-{
+void InitColorflasher() {
   pinMode(Colorflasher, OUTPUT);
 }
- void InitIR()
- {
+void InitIR() {
    pinMode(IRReceiver, INPUT);
    pinMode(IRTransmitter, OUTPUT);
  }
- void InitSpeaker()
- {
+ void InitSpeaker() {
   pinMode(Speaker,OUTPUT);
  }
-void setup()
-{
+void setup() {
  Serial.begin(9600);
  InitIR();
  InitSpeaker();
  InitColorflasher();
 }
-void loop()
-{ 
+void loop() { 
   Effect();
 }
-void Effect()
-{   int val2 = digitalRead(IRReceiver);
-    digitalWrite(IRTransmitter, HIGH);
-    digitalWrite(IRReceiver, HIGH);
-    if (val2 <= 4)
+void Effect() {   
+  int val2 = digitalRead(IRReceiver);
+  digitalWrite(IRTransmitter, HIGH);
+  digitalWrite(IRReceiver, HIGH);
+  if (val2 <= 4)
     {
       digitalWrite(Speaker, HIGH);
       digitalWrite(Colorflasher, HIGH); 
