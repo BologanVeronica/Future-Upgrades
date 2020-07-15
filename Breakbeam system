@@ -1,0 +1,46 @@
+#define IRReceiver 11
+#define IRTransmitter 3
+#define Speaker 13 //eu am pus active buzzer 
+//#define ButtonPin 2 //pui rezistenta (1 capat la gnd, altul la buton)
+#define Colorflasher 4
+
+void InitColorflasher()
+{
+  pinMode(Colorflasher, OUTPUT);
+}
+ void InitIR()
+ {
+   pinMode(IRReceiver, INPUT);
+   pinMode(IRTransmitter, OUTPUT);
+ }
+ void InitSpeaker()
+ {
+  pinMode(Speaker,OUTPUT);
+ }
+void setup()
+{
+ Serial.begin(9600);
+ InitIR();
+ InitSpeaker();
+ InitColorflasher();
+}
+void loop()
+{ 
+  Effect();
+}
+void Effect()
+{   int val2 = digitalRead(IRReceiver);
+    digitalWrite(IRTransmitter, HIGH);
+    digitalWrite(IRReceiver, HIGH);
+    if (val2 <= 4)
+    {
+      digitalWrite(Speaker, HIGH);
+      digitalWrite(Colorflasher, HIGH); 
+      delay(10);
+    }
+    else 
+    {
+      digitalWrite(Colorflasher, LOW);
+      digitalWrite(Speaker,LOW); 
+      delay(10);
+ }
