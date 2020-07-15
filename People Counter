@@ -1,0 +1,67 @@
+#define IR1 7 
+#define IR2 8
+int count=0;
+int i=1;
+
+boolean state1 = true;
+boolean state2 = true;
+boolean Outsideroom = false;
+ 
+void setup() {
+  Serial.begin(9600);
+  pinMode(IR1, INPUT);
+  pinMode(IR2, INPUT);
+}
+
+void loop() {
+  int val4 = digitalRead(IR1);
+  int val5 = digitalRead(IR2);
+  if (!val4 && i==1 && state1)
+    {
+     Outsideroom =true;
+     delay(100);
+     i++;
+     state1 = false;
+    }
+    
+   if (!IR2 && i==2 &&   state2)
+    {
+       Serial.println("A intrat in camera ");
+       Outsideroom =true;
+       delay(100);
+       i = 1 ;
+       count++;
+       Serial.print("Nu este nimeni in camera ");
+       Serial.println(count);
+       state2 = false;
+    }
+    
+   if (!IR2 && i==1 && state2 )
+   {
+       Outsideroom =true;
+       delay(100);
+       i = 2 ;
+       state2 = false;
+   }
+   
+  if (!IR1 && i==2 && state1 )
+   {
+       Serial.println("A parasit camera");
+       Outsideroom =true;
+       delay(100);
+       count--;
+       Serial.print("Nu este nimeni in camera: ");
+       Serial.println(count);
+       i = 1;
+       state1 = false;
+   }
+   
+   if (IR1)
+   {
+       state1 = true;
+   }
+   if (IR2)
+   {
+     state2 = true;
+   }
+}
