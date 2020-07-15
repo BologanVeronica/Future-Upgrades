@@ -1,0 +1,97 @@
+#define TRIG_PIN 13
+#define ECHO_PIN 11
+#define GLed 7
+#define YLed 6
+#define RLed 5
+#define ServoPIN 3
+
+
+long duration;
+int distance;
+#include <Servo.h>            
+                  
+int angle = 0;   
+
+void setup(){
+   InitLeds();
+   InitServo();
+   UltrasonicSetup();
+}
+
+void loop(){
+   GetDistance();
+}
+  
+void ServoOpen() { 
+  for(angle = 0; angle < 180; angle += 1)    
+      {                                                  
+        delay(1500);                       
+      } 
+  
+}
+void ServoClose(){
+    
+  for(angle = 180; angle>=1; angle-=5)     
+  {                                             
+    delay(1500);                       
+  } 
+
+}
+
+void UltrasonicSetup() {
+  pinMode(TRIG_PIN, OUTPUT); 
+  pinMode(ECHO_PIN, INPUT);
+}
+
+void InitLeds(){
+  pinMode(RLed, OUTPUT);
+  pinMode(GLed, OUTPUT);
+  pinMode(YLed, OUTPUT);
+}
+
+void InitServo(){
+  pinMode(ServoPIN, OUTPUT);
+  
+}
+
+float GetDistance() {
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+  duration = pulseIn(ECHO_PIN, HIGH);
+  distance= duration*0.034/2;
+  return distance;
+  Serial.print(distance);
+    if (distance <= 13)
+       {
+      digitalWrite(GLed, HIGH);
+      ServoClose();
+       }
+    else 
+       {
+        digitalWrite(GLed, LOW);
+        }
+ 
+    if (distance <= 10)
+       {
+         digitalWrite(YLed, HIGH);}
+    else 
+       { 
+          digitalWrite(YLed, LOW);
+       }
+    if (distance <= 3)
+       {
+          digitalWrite(RLed, HIGH);
+          ServoOpen();
+       }
+    else 
+       {
+           digitalWrite(RLed, LOW);
+             
+        }
+                
+}
+
+ 
