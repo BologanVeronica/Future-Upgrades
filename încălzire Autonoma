@@ -1,0 +1,39 @@
+#define RelayPIN2 23
+#define Tempanalog A6
+
+void setup() {
+  Serial.begin(9600);
+  InitRealay2();
+  InitSensorTemp();
+}
+
+void loop() {
+  ControlTemp();
+}
+
+void InitRealay2() {
+  pinMode(RelayPIN2, OUTPUT);
+}
+void InitSensorTemp() {
+  pinMode(Tempanalog, INPUT);
+}
+
+void ControlTemp() {  
+  int temperatureval;
+  temperatureval = analogRead(Tempanalog); 
+  if(temperatureval < 20) //vara
+    {
+      digitalWrite(RelayPIN2, HIGH); 
+      if(temperatureval > 30){
+      digitalWrite(RelayPIN2, LOW);
+      }
+    else 
+     {
+     digitalWrite(RelayPIN2, HIGH);
+      }
+    else
+    {
+    digitalWrite(RelayPIN2, LOW);
+      }
+    delay(100);
+  }
